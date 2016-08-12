@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Joe's Products and Services</title>
+
+    <!-- Style Sheets -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+
+    <!-- Library Scripts -->
+    <script src="js/angular.js"></script>
+
+    <!-- Application Scripts -->
+    <script src="app/app.js"></script>
+
+    <!-- Product Controllers -->
+    <script src="app/products/productListCtrl.js"></script>
+
+
+
+</head>
+<body ng-app="productManagement">
+<div class="panel panel-primary">
+    <div class="panel-heading" style="font-size: large;">Product List</div>
+    <div class="panel-body">
+        <table class="table" ng-controller="ProductListCtrl as vm">
+            <thead>
+                <tr>
+                    <td>
+                        <button type="button"
+                                class="btn btn-block"
+                                ng-click="vm.toggleImage()" >
+                            {{vm.showImage ? "Hide" : "Show"}} Images
+                        </button>
+                    </td>
+                    <td>Product</td>
+                    <td>Code</td>
+                    <td>Available</td>
+                    <td>Prices</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="product in vm.products">
+                    <td>
+                        <img ng-if="vm.showImage"
+                                ng-src="{{product.imageUrl}}"
+                             style="width: 50px;margin: 2px;"
+                             title="{{product.productName}}">
+                    </td>
+                    <td>{{ product.productName }}</td>
+                    <td>{{ product.productCode }}</td>
+                    <td>{{ product.releaseDate }}</td>
+                    <td>{{ product.price | currency }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
