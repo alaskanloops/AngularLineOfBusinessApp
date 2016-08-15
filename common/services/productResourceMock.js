@@ -105,7 +105,48 @@
         // then define what should happen when a get request is sent to this URL
         $httpBackend.whenGET(productUrl).respond(products);
 
+        // define regular expression for getting specific products
+        var editingRegex = new RegExp(productUrl + "/[0-9][0-9]*", '');
+        // function that locates and returns the desired product
+        $httpBackend.whenGET(editingRegex).respond(function (method, url, data) {
+            var product = {"productID": 0};
+            var parameters = url.split('/');
+            var length = parameters.length;
+            var id = parameters[length - 1];
 
+            if (id > 0) {
+                for(var i = 0; i < products.length; i++) {
+                    if (products[i].productId == id) {
+                        product = products[i];
+                        break;
+                    }
+                }
+            }
+            return [200, product, {}];
+        });
 
+        // code to handle saving and editing requests
+        $httpBackend.whenPOST(productUrl).respond(function (method, url, data) {
+            var product = angular.fromJson(data);
+
+            // if product id doesn't exist, add a new product
+            if (!product.productId) {
+                product.productId = products[products.length - 1].productId + 1;
+                products.push(product);
+            }
+            // else update a product
+            else {
+                for (var i = 0; i < products.length; i++) {
+                    if (products[i].productId == product.productId) {
+                        products[i] = product;
+                        break;
+                    }
+                }
+            }
+            return [200, product, {}];
+        });
+
+        // Pass through any requests for application files
+        $httpBackend.whenGET(/app/).passThrough();
     })
 }());
