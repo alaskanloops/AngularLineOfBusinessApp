@@ -4,8 +4,8 @@
  */
 //function becomes self-executing
 //immediately invoked function expression
-//function expression within paranthesis
+//function expression within parentheses
 (function () {
     "use strict"; // in strict mode, javascript will catch some common javascript errors and throw exception
-      var app = angular.module("productManagement", []);
+      var app = angular.module("productManagement", ["common.services"]);
 }());
