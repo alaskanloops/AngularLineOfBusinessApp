@@ -7,5 +7,7 @@
 //function expression within parentheses
 (function () {
     "use strict"; // in strict mode, javascript will catch some common javascript errors and throw exception
-      var app = angular.module("productManagement", ["common.services"]);
+      var app = angular.module("productManagement",
+                              ["common.services",
+                               "productResourceMock"]);
 }());
