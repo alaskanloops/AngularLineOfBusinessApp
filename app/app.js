@@ -35,6 +35,12 @@
                             templateUrl: "app/products/productEditView.html",
                             controller: "ProductEditCtrl as vm"
                         })
+                        // Detailed View
+                        .state("productDetail", {
+                            url: "/products/:productId", // denotes a parameter that will be passed to the state
+                            templateUrl: "app/products/productDetailView.html",
+                            controller: "ProductDetailCtrl as vm"
+                        })
                 }]
 
     );
