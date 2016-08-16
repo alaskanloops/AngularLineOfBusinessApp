@@ -56,6 +56,10 @@
                             url: "/tags",
                             templateUrl: "app/products/productEditTagsView.html"
                         })
+                        .state("productEdit.inventory", {
+                            url: "/inventory",
+                            templateUrl: "app/products/productEditInventoryView.html"
+                        })
                         // Detailed View
                         .state("productDetail", {
                             url: "/products/:productId", // denotes a parameter that will be passed to the state
