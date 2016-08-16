@@ -7,23 +7,13 @@
     angular
         .module("productManagement")
         .controller("ProductDetailCtrl",
-                    ProductDetailCtrl);
+                        ["product",
+                        ProductDetailCtrl]);
 
-    function ProductDetailCtrl() {
+    function ProductDetailCtrl(product) {
         var vm = this;
 
-        vm.product = {
-            "productId": 4,
-            "productName": "Game Music Creation",
-            "productCode": "MUS-004",
-            "releaseDate": "August 15, 2016",
-            "description": "One hour of gaming music development.",
-            "cost": 16.00,
-            "price": 21.00,
-            "category": "music",
-            "tags": [ "music", "development"],
-            "imageUrl": "http://simpleicon.com/wp-content/uploads/music-note-1-256x256.png"
-        };
+        vm.product = product;
 
         vm.title = "Product Detail: " + vm.product.productName;
 
