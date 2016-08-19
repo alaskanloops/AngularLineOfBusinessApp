@@ -10,6 +10,8 @@
       var app = angular.module("productManagement",
                               ["common.services",
                                "ui.router",
+                               "ui.mask",
+                               "ui.bootstrap",
                                "productResourceMock"]);
 
     // add route state configuration for entire application
