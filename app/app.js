@@ -12,6 +12,7 @@
                                "ui.router",
                                "ui.mask",
                                "ui.bootstrap",
+                               "angularCharts",
                                "productResourceMock"]);
 
     // add route state configuration for entire application
@@ -73,6 +74,19 @@
                                 product: function (productResource, $stateParams) {
                                     var productId = $stateParams.productId;
                                     return productResource.get({ productId: productId}).$promise;
+                                }
+                            }
+                        })
+                        // Price Analytics using Angular-charts
+                        .state("priceAnalytics", {
+                            url: "/priceAnalytics",
+                            templateUrl:"app/prices/priceAnalyticsView.html",
+                            controller: "PriceAnalyticsCtrl",
+                            resolve: {
+                                productResource: "productResource",
+
+                                products: function (productResource) {
+                                    return productResource.query().$promise;
                                 }
                             }
                         })
