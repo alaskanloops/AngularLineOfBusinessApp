@@ -14,6 +14,18 @@
                                "ui.bootstrap",
                                "angularCharts",
                                "productResourceMock"]);
+    // change default global exception handler to display message to user
+    app.config(function ($provide) {
+        $provide.decorator("$exceptionHandler",
+        ["$delegate",
+            function ($delegate) { // decorator function has a dependency on $delegate, providing original service to the method, allowing us to call base implementation of that service
+                return function (exception, cause) {
+                    exception.message = "Something went wrong! Please contact your administrator \n Message: " + exception.message;
+                    $delegate(exception, cause);
+                    alert(exception.message); // custom code to extend functionality by alerting user
+                };
+            }]);
+    });
 
     // add route state configuration for entire application
     app.config(["$stateProvider",
@@ -82,11 +94,23 @@
                             url: "/priceAnalytics",
                             templateUrl:"app/prices/priceAnalyticsView.html",
                             controller: "PriceAnalyticsCtrl",
+                            // resolve feature of navigation state retrieves data needed for page before navigating to new page
                             resolve: {
                                 productResource: "productResource",
-
                                 products: function (productResource) {
-                                    return productResource.query().$promise;
+                                    return productResource.query(
+                                        // function on success
+                                        function (response) {
+                                        // no code needed for success
+                                        },
+                                        // function on failure
+                                        function (response) {
+                                            if (response.status == 404) {
+                                                alert("Error accessing resource: " + response.config.method + " " + response.config.url);
+                                            } else {
+                                                alert(response.statusText);
+                                            }
+                                    }).$promise;
                                 }
                             }
                         })
